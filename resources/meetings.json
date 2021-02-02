@@ -1,0 +1,54 @@
+{
+    "additional_info": [
+        "Hey there! I am your Zoom Assistant!",
+        "I will give you alerts for your upcoming Zoom meetings",
+        "I will also help you to find your meetings ID and password."
+    ],
+    "credits": [
+        "Created with Python, Kivy and JSON",
+        "Thanks for taking assist from Zoom Assistant.",
+        "Created by Ahammad Shawki 8"
+    ],
+    "meetings": [
+        {
+            "category": "weekly",
+            "time": "Wed, 15:12",
+            "meeting_id": 2793488071,
+            "passcode": "msj@badboy",
+            "meeting_link": "https://us04web.zoom.us/j/2793488273?pwd=Nx2SFBWTjVrSVFlMThtYjdKQjUxdz09",
+            "meeting_organizer": "MSJ",
+            "meeting_subject": "Chemistry",
+            "active": true
+        },
+        {
+            "category": "weekly",
+            "time": "Mon, 12:02",
+            "meeting_id": 3931338815,
+            "passcode": "rr@fatman",
+            "meeting_link": "https://us04web.zoom.us/j/3931338015?pwd=k5OaVdJeFZ1MnNYaTNTZVgvNU8rdz09",
+            "meeting_organizer": "RR",
+            "meeting_subject": "Higher Math",
+            "active": true
+        },
+        {
+            "category": "weekly",
+            "time": "Thu, 02:52",
+            "meeting_id": 6871426461,
+            "passcode": "mnn@moustachesir",
+            "meeting_ink": "https://us04web.zoom.us/j/6871426161?pwd=OFPZHA4V3JDaVdpMm80ZjM5LzBqQT09",
+            "meeting_organizer": "MNN",
+            "meeting_subject": "ICT",
+            "active": true
+        },
+        {
+            "category": "daily",
+            "time": "20:01",
+            "meeting_id": 1202404000,
+            "passcode": "python20",
+            "meeting_link": "https://ahammadshawki8.github.io/",
+            "meeting_organizer": "Ahammad Shawki",
+            "meeting_subject": "Learn to Code with Python",
+            "active": true
+        }
+    ]
+}
