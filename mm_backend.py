@@ -31,7 +31,7 @@ def weekday_to_number(weekday):
 		return 1
 	elif weekday == "Wed":
 		return 2
-	elif weekday == "Thurs":
+	elif weekday == "Thu":
 		return 3
 	elif weekday == "Fri":
 		return 4
@@ -44,16 +44,13 @@ def weekday_to_number(weekday):
 
 
 # Add meetings functions
-def add_meeting(category, meeting_id, passcode, meeting_link, meeting_organizer, meeting_subject, timestamp):
+def add_meeting(category, meeting_id, passcode, meeting_link, meeting_organizer, meeting_subject, time):
 	if category == "onetime":
-		year, month, day, hour, minute = timestamp
-		time = f"{year}-{month}-{day}, {hour}:{minute}"
+		time_check = datetime.strptime(time, "%Y-%m-%d, %H:%M")
 	elif category == "weekly":
-		weekday, hour, minute = timestamp
-		time = f"{weekday}, {hour}:{minute}"
+		time_check = datetime.strptime(time, "%a, %H:%M")
 	else:
-		hour, minute = timestamp
-		time = f"{hour}:{minute}"
+		time_check = datetime.strptime(time, "%H:%M")
 
 	new_entry_dict = dict()
 	new_entry_dict["category"] = category
@@ -123,21 +120,21 @@ def show_upcoming_meetings(meeting_range):
 	if meeting_range == "30 Minute":
 		for meeting in meetings:
 			if meeting["category"] == "onetime":
-				temp_time = datetime.strptime(meeting["time"], format="%Y-%m-%d, %H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%Y-%m-%d, %H:%M")
 				time_diff = temp_time - datetime.now()
 				time_diff_reverse = datetime.now() - temp_time
 				if (int(time_diff.days) <= 1 or int(time_diff_reverse.days) <= 1) \
 				and (int(time_diff.seconds) <= 1800 or int(time_diff_reverse.seconds) <= 1800):
 					temporary_meetings.append(meeting)
 			elif meeting["category"] == "weekly":
-				temp_time = datetime.strptime(meeting["time"], format="%a, %H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%a, %H:%M")
 				time_diff = temp_time - datetime.now()
 				time_diff_reverse = datetime.now() - temp_time
-				if ((str(temp_time)[:3]) == datetime.now().strftime(fmt = "%a")) or abs(weekday_to_number(str(temp_time)[:3]) - datetime.weekday(datetime.now()) <= 1) \
+				if ((str(temp_time)[:3]) == datetime.now().strftime("%a")) or abs(weekday_to_number(str(temp_time)[:3]) - datetime.weekday(datetime.now()) <= 1) \
 				and (int(time_diff.seconds) <= 1800 or int(time_diff_reverse.seconds) <= 1800):
 					temporary_meetings.append(meeting)
 			else:
-				temp_time = datetime.strptime(meeting["time"], format="%H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%H:%M")
 				time_diff = temp_time - datetime.now()
 				time_diff_reverse = datetime.now() - temp_time
 				if (int(time_diff.seconds) <= 1800 or int(time_diff_reverse.seconds) <= 1800):
@@ -146,21 +143,21 @@ def show_upcoming_meetings(meeting_range):
 	elif meeting_range == "2 Hour":
 		for meeting in meetings:
 			if meeting["category"] == "onetime":
-				temp_time = datetime.strptime(meeting["time"], format="%Y-%m-%d, %H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%Y-%m-%d, %H:%M")
 				time_diff = temp_time - datetime.now()
 				time_diff_reverse = datetime.now() - temp_time
 				if (int(time_diff.days) <= 1 or int(time_diff_reverse.days) <= 1) \
 				and (int(time_diff.seconds) <= 7200 or int(time_diff_reverse.seconds) <= 7200):
 					temporary_meetings.append(meeting)
 			elif meeting["category"] == "weekly":
-				temp_time = datetime.strptime(meeting["time"], format="%a, %H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%a, %H:%M")
 				time_diff = temp_time - datetime.now()
 				time_diff_reverse = datetime.now() - temp_time
-				if ((str(temp_time)[:3] == datetime.now().strftime(fmt = "%a")) or abs(weekday_to_number(str(temp_time)[:3]) - datetime.weekday(datetime.now()) <= 1))\
+				if ((str(temp_time)[:3] == datetime.now().strftime("%a")) or abs(weekday_to_number(str(temp_time)[:3]) - datetime.weekday(datetime.now()) <= 1))\
 				and (int(time_diff.seconds) <= 7200 or int(time_diff_reverse.seconds) <= 7200):
 					temporary_meetings.append(meeting)
 			else:
-				temp_time = datetime.strptime(meeting["time"], format="%H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%H:%M")
 				time_diff = temp_time - datetime.now()
 				time_diff_reverse = datetime.now() - temp_time
 				if (int(time_diff.seconds) <= 7200 or int(time_diff_reverse.seconds) <= 7200):
@@ -169,12 +166,12 @@ def show_upcoming_meetings(meeting_range):
 	elif meeting_range == "Today":
 		for meeting in meetings:
 			if meeting["category"] == "onetime":
-				temp_time = datetime.strptime(meeting["time"], format="%Y-%m-%d, %H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%Y-%m-%d, %H:%M")
 				if str(temp_time)[:10] == str(datetime.now())[:10]:
 					temporary_meetings.append(meeting)
 			elif meeting["category"] == "weekly":
-				temp_time = datetime.strptime(meeting["time"], format="%a, %H:%M")
-				if str(temp_time)[:3] == datetime.now().strftime(fmt = "%a"):
+				temp_time = datetime.strptime(meeting["time"], "%a, %H:%M")
+				if str(temp_time)[:3] == datetime.now().strftime("%a"):
 					temporary_meetings.append(meeting)
 			else:
 				temporary_meetings.append(meeting)
@@ -182,20 +179,30 @@ def show_upcoming_meetings(meeting_range):
 	elif meeting_range == "Tomorrow":
 		for meeting in meetings:
 			if meeting["category"] == "onetime":
-				temp_time = datetime.strptime(meeting["time"], format="%Y-%m-%d, %H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%Y-%m-%d, %H:%M")
 				if (str(temp_time)[:7] == str(datetime.now())[:7]) and (int(str(temp_time)[8:10]) - 1 == int(str(datetime.now())[8:10])):
 					temporary_meetings.append(meeting)
 			elif meeting["category"] == "weekly":
-				temp_time = datetime.strptime(meeting["time"], format="%a, %H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%a, %H:%M")
 				if weekday_to_number(str(temp_time)[:3]) - 1 == datetime.weekday(datetime.now()):
 					temporary_meetings.append(meeting)
 			else:
 				temporary_meetings.append(meeting)
 
+	elif meeting_range == "1 Week":
+		for meeting in meetings:
+			if meeting["category"] == "onetime":
+				temp_time = datetime.strptime(meeting["time"], "%Y-%m-%d, %H:%M")
+				time_diff = temp_time - datetime.now()
+				if time_diff.days <= 7:
+					temporary_meetings.append(meeting)
+			else:
+				temporary_meetings.append(meeting)
+	
 	elif meeting_range == "15 Day":
 		for meeting in meetings:
 			if meeting["category"] == "onetime":
-				temp_time = datetime.strptime(meeting["time"], format="%Y-%m-%d, %H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%Y-%m-%d, %H:%M")
 				time_diff = temp_time - datetime.now()
 				if time_diff.days <= 15:
 					temporary_meetings.append(meeting)
@@ -205,13 +212,13 @@ def show_upcoming_meetings(meeting_range):
 	else: # 30 Day
 		for meeting in meetings:
 			if meeting["category"] == "onetime":
-				temp_time = datetime.strptime(meeting["time"], format="%Y-%m-%d, %H:%M")
+				temp_time = datetime.strptime(meeting["time"], "%Y-%m-%d, %H:%M")
 				time_diff = temp_time - datetime.now()
 				if time_diff.days <= 30:
 					temporary_meetings.append(meeting)
 			else:
 				temporary_meetings.append(meeting)
-		pass
+	return temporary_meetings
 
 
 def delete_meeting(time):
@@ -256,3 +263,11 @@ def clear_history():
 def join_meeting(meeting_link):
 	webbrowser.open(meeting_link)
 	return "Joining ..."
+
+def go_to_website():
+	webbrowser.open("https://ahammadshawki8.github.io/")
+	return "Redirecting to Creators Website ..."
+
+def go_to_readme():
+	webbrowser.open("https://github.com/ahammadshawki8/One-Meeting-Assistant/blob/main/README.md")
+	return "Opening README.md ..."

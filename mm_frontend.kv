@@ -1,0 +1,287 @@
+# All imports
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+
+
+# GetStarted class
+<GetStarted>:
+    name: "GetStarted"
+    FloatLayout:
+        Image:
+            source: 'resources/only_pic.jpg'
+            size_hint: (0.8,0.525)
+            pos_hint: {"x": 0.11, "top": 0.95}
+
+        Image:
+            source: 'resources/only_head.jpg'
+            size_hint: (0.5,0.225)
+            pos_hint: {"x": 0.25, "top": 0.5}
+        
+        Button:
+            text: "GET STARTED"
+            font_size: 15
+            color: (1,1,1,1)
+            italic: True
+            background_color: (51/255, 153/255, 255/255, 1)
+            size_hint: (0.35,0.05)
+            pos_hint: {"x":0.34, "top": 0.2}
+            on_release:
+                root.go_to_MainPanel()
+
+
+
+# MainPanel class
+<MainPanel>:
+    name: "MainPanel"
+    FloatLayout:
+        Image:
+            source: 'resources/header.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": 1.3}
+
+        Image:
+            source: 'resources/footer.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": .465}
+
+        Label:
+            text: "MAIN PANEL FUNCTIONALITIES"
+            font_size: 22
+            color: (0,0,0,1)
+            pos_hint: {"top": 1.3}
+
+        Button:
+            background_normal: 'resources/docs.png'
+            background_down: 'resources/docs_down.png'
+            size_hint: (0.45,0.25)
+            pos_hint: {"x": 0.18, "top": 0.75}
+            on_release:
+                root.go_to_Docs()
+
+        Button:
+            background_normal: 'resources/search.png'
+            background_down: 'resources/search_down.png'
+            size_hint: (0.45,0.25)
+            pos_hint: {"x": 0.43, "top": 0.55}
+            on_release:
+                root.go_to_SearchPanel()
+        
+        Button:
+            background_normal: 'resources/add.png'
+            background_down: 'resources/add_down.png'
+            size_hint: (0.45,0.25)
+            pos_hint: {"x": 0.18, "top": 0.35}
+            on_release:
+                root.go_to_AddPanel()
+        
+        Image:
+            source: 'resources/docs_text.png'
+            size_hint: (0.45/1.5,0.25/1.5)
+            pos_hint: {"x": 0.55, "top": 0.75}
+
+        Image:
+            source: 'resources/search_text.png'
+            size_hint: (0.45/1.5,0.25/1.5)
+            pos_hint: {"x": 0.17, "top": 0.5}
+
+        Image:
+            source: 'resources/add_text.png'
+            size_hint: (0.45/1.5,0.25/1.5)
+            pos_hint: {"x": 0.55, "top": 0.3}
+
+        Button:
+            background_normal: 'resources/profile.png'
+            background_down: 'resources/profile_down.png'
+            size_hint: (0.18,0.1)
+            pos_hint: {"x": 0.82, "top": 0.9825}
+            on_release:
+                root.go_to_website()
+
+
+
+# AddPanel class
+<AddPanel>:
+    FloatLayout:
+        Image:
+            source: 'resources/header.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": 1.3}
+
+        Image:
+            source: 'resources/footer.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": .465}
+
+        Button:
+            background_normal: 'resources/profile.png'
+            background_down: 'resources/profile_down.png'
+            size_hint: (0.18,0.1)
+            pos_hint: {"x": 0.82, "top": 0.9825}
+            on_release:
+                root.go_to_website()
+
+        Label:
+            text: "WELCOME TO ADD PANEL"
+            font_size: 25
+            color: (0, 0, 0,1)
+            pos_hint: {"top": 1.3}
+
+        Label:
+            text: "CHOOSE YOUR MEETING CATEGORY"
+            font_size: 14
+            color: (51/255, 153/255, 255/255,1)
+            pos_hint: {"top": 1.25}
+
+        Button:
+            background_normal: 'resources/daily.png'
+            background_down: 'resources/daily_down.png'
+            size_hint: (0.45,0.25)
+            pos_hint: {"x": 0.16, "top": 0.74}
+            on_release:
+                root.go_to_AddMeeting("daily")
+
+        Button:
+            background_normal: 'resources/weekly.png'
+            background_down: 'resources/weekly_down.png'
+            size_hint: (0.45,0.25)
+            pos_hint: {"x": 0.4, "top": 0.54}
+            on_release:
+                root.go_to_AddMeeting("weekly")
+
+        Button:
+            background_normal: 'resources/onetime.png'
+            background_down: 'resources/onetime_down.png'
+            size_hint: (0.45,0.25)
+            pos_hint: {"x": 0.16, "top": 0.34}
+            on_release:
+                root.go_to_AddMeeting("onetime")
+
+        Button:
+            background_normal: 'resources/cross.png'
+            background_down: 'resources/cross_down.png'
+            size_hint: (0.4/2,0.25/2)
+            pos_hint: {"x": 0.55, "top": 0.74}
+            on_release:
+                root.go_back()
+            
+
+
+# AddMeeting class
+<AddMeeting>:
+    name: "AddMeeting"
+
+    FloatLayout:
+        Image:
+            source: 'resources/header.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": 1.3}
+
+        Image:
+            source: 'resources/footer.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": .465}
+
+        Button:
+            background_normal: 'resources/profile.png'
+            background_down: 'resources/profile_down.png'
+            size_hint: (0.18,0.1)
+            pos_hint: {"x": 0.82, "top": 0.9825}
+            on_release:
+                root.go_to_website()
+
+        Label:
+            text: "FILL UP THE FORM"
+            font_size: 25
+            color: (0, 0, 0,1)
+            pos_hint: {"top": 1.3}
+
+        Button:
+            background_normal: 'resources/cross.png'
+            background_down: 'resources/cross_down.png'
+            size_hint: (0.4/2,0.25/2)
+            pos_hint: {"x": 0.42, "top": 0.8}
+            on_release:
+                root.go_back()
+
+
+# Add Meeting PopUp
+<AddMeetingPop>:
+    Label:
+        text: "SORRY, SOMETHING WENT WRONG :("
+        font_size: 12
+        size_hint: 0.6, 0.2
+        pos_hint: {"x": 0.2, "top":0.9}
+    Label:
+        text: "PLEASE ENTER THE MEETING TIME IN CORRECT FORMAT"
+        font_size: 12
+        size_hint: 0.6, 0.2
+        pos_hint: {"x": 0.2, "top":0.7}
+
+
+
+# AddPanel class
+<SearchPanel>:
+    name: "SearchPanel"
+    FloatLayout:
+        Image:
+            source: 'resources/header.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": 1.3}
+
+        Image:
+            source: 'resources/footer.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": .465}
+
+        Button:
+            background_normal: 'resources/profile.png'
+            background_down: 'resources/profile_down.png'
+            size_hint: (0.18,0.1)
+            pos_hint: {"x": 0.82, "top": 0.9825}
+            on_release:
+                root.go_to_website()
+
+        Label:
+            text: "WELCOME TO SEARCH PANEL"
+            font_size: 25
+            color: (0, 0, 0,1)
+            pos_hint: {"top": 1.3}
+
+        Label:
+            text: "EXECUTE FOLLOWING FUNCTIONS TO SHOW MEETINGS"
+            font_size: 14
+            color: (51/255, 153/255, 255/255,1)
+            pos_hint: {"top": 1.25}
+
+        Button:
+            background_normal: 'resources/all.png'
+            background_down: 'resources/all_down.png'
+            size_hint: (0.485,0.25)
+            pos_hint: {"x": 0.16, "top": 0.74}
+            on_release:
+                root.go_to_AllMeeting()
+
+        Button:
+            background_normal: 'resources/upcoming.png'
+            background_down: 'resources/upcoming_down.png'
+            size_hint: (0.45,0.25)
+            pos_hint: {"x": 0.4, "top": 0.54}
+            on_release:
+                root.go_to_UpcomingMeeting()
+
+        Button:
+            background_normal: 'resources/past.png'
+            background_down: 'resources/past_down.png'
+            size_hint: (0.485,0.25)
+            pos_hint: {"x": 0.16, "top": 0.34}
+            on_release:
+                root.go_to_PastMeeting()
+
+        Button:
+            background_normal: 'resources/cross.png'
+            background_down: 'resources/cross_down.png'
+            size_hint: (0.4/2,0.25/2)
+            pos_hint: {"x": 0.55, "top": 0.74}
+            on_release:
+                root.go_back()

@@ -39,16 +39,6 @@
             "meeting_organizer": "MNN",
             "meeting_subject": "ICT",
             "active": true
-        },
-        {
-            "category": "daily",
-            "time": "20:01",
-            "meeting_id": 1202404000,
-            "passcode": "python20",
-            "meeting_link": "https://ahammadshawki8.github.io/",
-            "meeting_organizer": "Ahammad Shawki",
-            "meeting_subject": "Learn to Code with Python",
-            "active": true
         }
     ]
 }
