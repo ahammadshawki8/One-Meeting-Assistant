@@ -285,3 +285,152 @@
             pos_hint: {"x": 0.55, "top": 0.74}
             on_release:
                 root.go_back()
+
+
+# All Meeting class
+<AllMeeting>:
+    name: "AllMeeting"
+    FloatLayout:
+        Image:
+            source: 'resources/header.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": 1.3}
+
+        Image:
+            source: 'resources/footer.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": .465}
+
+        Button:
+            background_normal: 'resources/profile.png'
+            background_down: 'resources/profile_down.png'
+            size_hint: (0.18,0.1)
+            pos_hint: {"x": 0.82, "top": 0.9825}
+            on_release:
+                root.go_to_website()
+
+        Label:
+            text: "SHOW ALL MEETING PANEL"
+            font_size: 25
+            color: (0, 0, 0,1)
+            pos_hint: {"top": 1.3}
+
+        Label:
+            text: "FILL UP THE QUERY FORM"
+            font_size: 14
+            color: (51/255, 153/255, 255/255,1)
+            pos_hint: {"top": 1.25}
+
+        Label:
+            text: "LEAVE IT BLANK IF YOU DONT WANT TO QUERY"
+            font_size: 14
+            color: (51/255, 153/255, 255/255,1)
+            pos_hint: {"top": 1.23}
+
+        Button:
+            background_normal: 'resources/cross.png'
+            background_down: 'resources/cross_down.png'
+            size_hint: (0.4/2,0.25/2)
+            pos_hint: {"x": 0.4, "top": 0.74}
+            on_release:
+                root.go_back()
+
+# All Meeting PopUp
+<AllMeetingPop>:
+    Label:
+        text: "SORRY, SOMETHING WENT WRONG :("
+        font_size: 12
+        size_hint: 0.6, 0.2
+        pos_hint: {"x": 0.2, "top":0.9}
+    Label:
+        text: "PLEASE ENTER THE DATE QUERY IN CORRECT FORMAT"
+        font_size: 12
+        size_hint: 0.6, 0.2
+        pos_hint: {"x": 0.2, "top":0.7}
+
+
+
+
+
+
+
+# MeetingDisplayer Class
+<MeetingDisplayer>:
+    name: "MeetingDisplayer"
+    FloatLayout:
+        Image:
+            source: 'resources/header.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": 1.3}
+
+        Button:
+            background_normal: 'resources/profile.png'
+            background_down: 'resources/profile_down.png'
+            size_hint: (0.18,0.1)
+            pos_hint: {"x": 0.82, "top": 0.9825}
+            on_release:
+                root.go_to_website()
+
+        Label:
+            text: "MEETING DISPLAYER PANEL"
+            font_size: 25
+            color: (0, 0, 0,1)
+            pos_hint: {"top": 1.3}
+
+        Button:
+            background_normal: 'resources/cross.png'
+            background_down: 'resources/cross_down.png'
+            size_hint: (0.4/2,0.25/2)
+            pos_hint: {"x": 0.7, "top": 0.92}
+            on_release:
+                root.go_back()
+
+
+# MeetingInformation Class
+<MeetingInformation>:
+    name: "MeetingInformation"
+    FloatLayout:
+        Image:
+            source: 'resources/header.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": 1.3}
+
+        Image:
+            source: 'resources/footer.png'
+            size_hint: (0.98,0.8)
+            pos_hint: {"x": 0.01, "top": .465}
+
+        Button:
+            background_normal: 'resources/profile.png'
+            background_down: 'resources/profile_down.png'
+            size_hint: (0.18,0.1)
+            pos_hint: {"x": 0.82, "top": 0.9825}
+            on_release:
+                root.go_to_website()
+
+        Label:
+            text: "MEETING INFORMATION"
+            font_size: 25
+            color: (0, 0, 0,1)
+            pos_hint: {"top": 1.3}
+
+        Button:
+            background_normal: 'resources/cross.png'
+            background_down: 'resources/cross_down.png'
+            size_hint: (0.4/2,0.25/2)
+            pos_hint: {"x": 0.42, "top": 0.8}
+            on_release:
+                root.go_back()
+
+# Error Link PopUp
+<ErrorLinkPop>:
+    Label:
+        text: "SORRY, SOMETHING WENT WRONG :("
+        font_size: 12
+        size_hint: 0.6, 0.2
+        pos_hint: {"x": 0.2, "top":0.9}
+    Label:
+        text: "THE MEETING LINK IS INVALID OR NOT BROWSABLE"
+        font_size: 12
+        size_hint: 0.6, 0.2
+        pos_hint: {"x": 0.2, "top":0.7}

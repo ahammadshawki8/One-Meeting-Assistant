@@ -98,10 +98,14 @@ def show_all_meetings(queries):
 				temporary_meetings.append(meeting)
 	if "date" in new_queries.keys():
 		for meeting in meetings:
-			if new_queries["date"] in meeting["time"]:
+			if meeting["category"] == "onetime":
+				if new_queries["date"] in meeting["time"]:
+					temporary_meetings.append(meeting)
+			elif meeting["category"] == "daily":
 				temporary_meetings.append(meeting)
-			if meeting["category"] == "daily":
-				temporary_meetings.append(meeting)
+			else:
+				if datetime.strftime(datetime.strptime(new_queries["date"], "%Y-%m-%d"),"%a") in meeting["time"]:
+					temporary_meetings.append(meeting)
 	if len(new_queries.keys()) == 0:
 		temporary_meetings = copy.deepcopy(meetings)
 
@@ -221,20 +225,20 @@ def show_upcoming_meetings(meeting_range):
 	return temporary_meetings
 
 
-def delete_meeting(time):
+def deactivate_meeting(organizer, subject, time):
 	meetings = Holder.meetings
 	for meeting in meetings:
-		if meeting["time"] == time:
+		if meeting["time"] == time and meeting["active"] == True and meeting["meeting_organizer"] == organizer and meeting["meeting_subject"] == subject:
 			meeting["active"] = False
 	Holder.meetings = meetings
 	dict_to_json()
-	return "Deleted"
+	return "Deactivated"
 
 
-def activate_meeting(time):
+def activate_meeting(organizer, subject, time):
 	meetings = Holder.meetings
 	for meeting in meetings:
-		if meeting["time"] == time and meeting["active"] == False:
+		if meeting["time"] == time and meeting["active"] == False and meeting["meeting_organizer"] == organizer and meeting["meeting_subject"] == subject:
 			meeting["active"] = True
 	Holder.meetings = meetings
 	dict_to_json()
