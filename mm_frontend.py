@@ -20,14 +20,16 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.image import Image
 
 
+
 # Setting up few things
 Config.set('graphics', 'height', 680)
 Config.set('graphics', 'width', 380)
 Config.set('graphics', 'resizable', 0)
 Config.write()
 
-    
-# GetStarted class
+
+
+# Get Started
 class GetStarted(Screen):
     def go_to_MainPanel(self):
         sm.add_widget(MainPanel(name="MainPanel"))
@@ -35,7 +37,8 @@ class GetStarted(Screen):
         sm.current = "MainPanel"
         
 
-# MainPanel class
+
+# Main Panel
 class MainPanel(Screen):
     def go_to_website(self):
         mm.go_to_website()
@@ -54,6 +57,7 @@ class MainPanel(Screen):
         mm.go_to_readme()
 
 
+
 # AddPanel Class
 class AddPanel(Screen):
     def go_to_website(self):
@@ -70,6 +74,8 @@ class AddPanel(Screen):
                 sm.screens.remove(screen)
         sm.transition = SlideTransition(direction = "right")
         sm.current = "MainPanel"
+
+
 
 # AddMeeting Class
 class AddMeeting(Screen):
@@ -144,7 +150,6 @@ class AddMeeting(Screen):
         else:
             self.time_value.text = "YYYY-MM-DD, HH:MM"
 
-
     def go_to_website(self):
         mm.go_to_website()
 
@@ -155,6 +160,7 @@ class AddMeeting(Screen):
         sm.transition = SlideTransition(direction = "right")
         sm.current = "AddPanel"
 
+
 # Add Meeting PopUp
 class AddMeetingPop(FloatLayout):
     pass
@@ -164,6 +170,7 @@ def show_AddMeetingPop():
     popup_window = Popup(title = "ADD MEETING ERROR", content = show, size_hint = (0.9, 0.2))
     popup_window.open()
     
+
 
 # SearchPanel class
 class SearchPanel(Screen):
@@ -181,9 +188,10 @@ class SearchPanel(Screen):
         sm.current = "UpcomingMeeting"
 
     def go_to_PastMeeting(self):
-        sm.add_widget(PastMeeting(name="PastMeeting"))
+        info = mm.past_meetings()
+        sm.add_widget(MeetingDisplayer("SearchPanel", info, name="MeetingDisplayer"))
         sm.transition = SlideTransition(direction = "left")
-        sm.current = "PastMeeting"
+        sm.current = "MeetingDisplayer"
 
     def go_back(self):
         for screen in sm.screens:
@@ -191,6 +199,7 @@ class SearchPanel(Screen):
                 sm.screens.remove(screen)
         sm.transition = SlideTransition(direction = "right")
         sm.current = "MainPanel"
+
 
 
 # All Meeting class
@@ -226,20 +235,17 @@ class AllMeeting(Screen):
         self.add_widget(self.submit_button)
         self.submit_button.bind(on_release = lambda x: self.show_all_meeting())
 
-
     def show_all_meeting(self):
         self.organizer_query = "all" if self.organizer_query_value.text.strip() == "" else self.organizer_query_value.text.strip()
         self.subject_query = "all" if self.subject_query_value.text.strip() == "" else self.subject_query_value.text.strip()
         self.weekday_query = "all" if self.weekday_query_value.text.strip() == "" else self.weekday_query_value.text.strip()
         self.date_query = "all" if (self.date_query_value.text.strip() == "") or (self.date_query_value.text.strip() == "YYYY-MM-DD") else self.date_query_value.text.strip()
-        
         try:
             queries = {"organizer":self.organizer_query, "subject":self.subject_query, "weekday":self.weekday_query, "date":self.date_query}
             info= mm.show_all_meetings(queries)
             sm.add_widget(MeetingDisplayer("AllMeeting", info, name="MeetingDisplayer"))
             sm.transition = SlideTransition(direction = "left")
             sm.current = "MeetingDisplayer"
-            
         except:
             show_AllMeetingPop()
 
@@ -247,7 +253,6 @@ class AllMeeting(Screen):
         self.subject_query_value.text = ""
         self.weekday_query_value.text = ""
         self.date_query_value.text = "YYYY-MM-DD"
-
 
     def go_to_website(self):
         mm.go_to_website()
@@ -259,6 +264,7 @@ class AllMeeting(Screen):
         sm.transition = SlideTransition(direction = "right")
         sm.current = "SearchPanel"
 
+
 # Add Meeting PopUp
 class AllMeetingPop(FloatLayout):
     pass
@@ -267,6 +273,7 @@ def show_AllMeetingPop():
     show = AllMeetingPop()
     popup_window = Popup(title = "SHOW ALL MEETING ERROR", content = show, size_hint = (0.9, 0.2))
     popup_window.open()
+
 
 
 # Upcoming Meeting class
@@ -280,19 +287,27 @@ class UpcomingMeeting(Screen):
                 sm.screens.remove(screen)
         sm.transition = SlideTransition(direction = "right")
         sm.current = "SearchPanel"
+    
+    def go_to_MeetingDisplayer(self, time_range):
+        if time_range == "30_mins":
+            info = mm.show_upcoming_meetings("30 Minute")
+        elif time_range == "2_hours":
+            info = mm.show_upcoming_meetings("2 Hour")
+        elif time_range == "today":
+            info = mm.show_upcoming_meetings("Today")
+        elif time_range == "tomorrow":
+            info = mm.show_upcoming_meetings("Tomorrow")
+        elif time_range == "this_week":
+            info = mm.show_upcoming_meetings("1 Week")
+        elif time_range == "15_days":
+            info = mm.show_upcoming_meetings("15 Day")
+        else:
+            info = mm.show_upcoming_meetings("30 Day")
 
-
-# Past Meeting class
-class PastMeeting(Screen):
-    def go_to_website(self):
-        mm.go_to_website()
-
-    def go_back(self):
-        for screen in sm.screens:
-            if screen.name == "PastMeeting":
-                sm.screens.remove(screen)
-        sm.transition = SlideTransition(direction = "right")
-        sm.current = "SearchPanel"
+        sm.add_widget(MeetingDisplayer("UpcomingMeeting", info, name="MeetingDisplayer"))
+        sm.transition = SlideTransition(direction = "left")
+        sm.current = "MeetingDisplayer"
+        
 
 
 # Meeting Displayer Class
@@ -302,14 +317,22 @@ class MeetingDisplayer(Screen):
         self.back = back
         self.info = info
 
+        if len(self.info) == 0:
+            self.no_label = Label(text = "THERE ISN'T ANY MEETING", color = (0/255, 153/255, 204/255, 1), font_size = 18)
+            self.no_label.pos_hint = { "top": 1.01}
+            self.add_widget(self.no_label)
+            self.no_label_2 = Label(text = "WHICH CAN SATISFY YOUR QUERY", color = (0/255, 153/255, 204/255, 1), font_size = 18)
+            self.no_label_2.pos_hint = { "top": 0.975}
+            self.add_widget(self.no_label_2)
+
         self.headings = []
         for meeting in self.info:
             meeting_subject = meeting["meeting_subject"]
             meeting_organizer = meeting["meeting_organizer"]
             time = meeting["time"]
             heading = f"{meeting_subject} | {meeting_organizer} | {time}"
-            self.headings.append(heading)
-        
+            self.headings.append([heading,None])
+            
         self.scroller = ScrollView()
         self.scroller.pos_hint = {"x": 0.1, "top": 0.75}
         self.scroller.size_hint = (0.8, 0.63)
@@ -325,11 +348,11 @@ class MeetingDisplayer(Screen):
         else:
             self.info_grid.size_hint = 1, 0.35
         
-
+        i = -1
         for heading in self.headings:
-            self.meet_topic = Button(text = heading, font_size = 15, color = (1,1,1,1), background_color = (0/255, 153/255, 204/255, 1))
-            self.info_grid.add_widget(self.meet_topic)
-            self.meet_topic.bind(on_release = lambda x: self.explain(heading))
+            i += 1
+            heading[1] = Button(text = heading[0], font_size = 15, color = (1,1,1,1), background_color = (0/255, 153/255, 204/255, 1), on_release = lambda x, j=i: self.find_function(j))
+            self.info_grid.add_widget(heading[1])
         self.scroller.add_widget(self.info_grid)
 
         self.footer = Image(
@@ -342,14 +365,27 @@ class MeetingDisplayer(Screen):
         self.add_widget(self.scroller)
         self.add_widget(self.footer)
 
-    def explain(self, heading):
-        subject, organizer, time = heading.split(" | ")
-        for meeting in self.info:
-            if meeting["meeting_subject"] == subject and meeting["meeting_organizer"] == organizer and meeting["time"] == time:
-                sm.add_widget(MeetingInformation(meeting, name="MeetingInformation"))
-                sm.transition = SlideTransition(direction = "left")
-                sm.current = "MeetingInformation"
+        if self.back == "SearchPanel" and len(self.info) != 0:
+            self.clear_history_button = Button(text= "Clear History", 
+            font_size =  16,
+            color =  (1,1,1,1),
+            background_color =  (51/255, 153/255, 255/255, 1),
+            size_hint =  (0.4,0.05),
+            pos_hint =  {"x":0.3, "top": 0.14},
+            on_release = lambda x: self.clear_history_function())
+            self.add_widget(self.clear_history_button)
 
+    def clear_history_function(self):
+        mm.clear_history()
+        print("History Cleared")
+        
+    def find_function(self, i):
+        sm.add_widget(MeetingInformation(self.info, name = "MeetingInformation"))
+        MeetingInformation_screen = sm.get_screen('MeetingInformation')
+        setattr(MeetingInformation_screen, "index", i)
+        sm.transition = SlideTransition(direction = "left")
+        sm.current = 'MeetingInformation'
+        
     def go_to_website(self):
         mm.go_to_website()
 
@@ -359,13 +395,18 @@ class MeetingDisplayer(Screen):
                 sm.screens.remove(screen)
         sm.transition = SlideTransition(direction = "right")
         sm.current = self.back
-        
+
+
 
 # Meeting Information class
 class MeetingInformation(Screen):
-    def __init__(self, meeting, **kwargs):
+    def __init__(self, meeting_list, **kwargs):
         super().__init__(**kwargs)
-        self.meeting = meeting
+        self.meeting_list  = meeting_list
+
+    def on_pre_enter(self):
+        meeting = self.meeting_list[self.index]
+        self.meeting = meeting        
 
         self.info_grid = GridLayout()
         self.info_grid.cols = 2
@@ -401,7 +442,7 @@ class MeetingInformation(Screen):
         self.info_grid.add_widget(self.activation_status_value)
         self.add_widget(self.info_grid)
 
-        self.activision_button = Button(text = "DEACTIVATE MEETING", underline = True, font_size = 12, color = (0/255, 153/255, 204/255, 1), background_color = (1,1,1,0))
+        self.activision_button = Button(text = "DEACTIVATE MEETING" if self.activation_status_value.text == True else "ACTIVATE MEETING" , underline = True, font_size = 12, color = (0/255, 153/255, 204/255, 1), background_color = (1,1,1,0))
         self.activision_button.size_hint = 0.4, 0.06
         self.activision_button.pos_hint = {"x":0.3,"top": 0.23}
         self.add_widget(self.activision_button)
@@ -439,6 +480,7 @@ class MeetingInformation(Screen):
         sm.transition = SlideTransition(direction = "right")
         sm.current = "MeetingDisplayer"
 
+
 # Error Link PopUp
 class ErrorLinkPop(FloatLayout):
     pass
@@ -471,6 +513,7 @@ class MMApp(App):
     def build(self):
         Window.clearcolor = (0.85,0.85,0.85,1)
         return sm
+
 
 
 # Running the entire file

@@ -9,7 +9,7 @@ import webbrowser
 
 # common classes and functions
 def json_to_dict():
-	with open("resources\\meetings.json") as read_file:
+	with open("meetings.json") as read_file:
 		json_dict = json.load(read_file)
 	return (json_dict["additional_info"], json_dict["credits"], json_dict["meetings"])
 
@@ -19,7 +19,7 @@ class Holder:
 
 
 def dict_to_json():
-	with open("resources\\meetings.json", "w") as write_file:
+	with open("meetings.json", "w") as write_file:
 		json.dump({"additional_info": Holder.additional_info, "credits": Holder.credits, "meetings": Holder.meetings}, write_file, indent=4)
 	return "Done"
 
@@ -114,6 +114,7 @@ def show_all_meetings(queries):
 			temporary_meetings.remove(meeting)
 
 	return temporary_meetings
+
 
 
 def show_upcoming_meetings(meeting_range):
@@ -225,6 +226,7 @@ def show_upcoming_meetings(meeting_range):
 	return temporary_meetings
 
 
+
 def deactivate_meeting(organizer, subject, time):
 	meetings = Holder.meetings
 	for meeting in meetings:
@@ -233,6 +235,7 @@ def deactivate_meeting(organizer, subject, time):
 	Holder.meetings = meetings
 	dict_to_json()
 	return "Deactivated"
+
 
 
 def activate_meeting(organizer, subject, time):
@@ -245,6 +248,7 @@ def activate_meeting(organizer, subject, time):
 	return "Activated"
 
 
+
 def past_meetings():
 	past_meetings_list = []
 	meetings = Holder.meetings
@@ -254,23 +258,30 @@ def past_meetings():
 	return past_meetings_list
 
 
+
 def clear_history():
 	meetings = Holder.meetings
+	temporary_meetings = []
 	for meeting in meetings:
-		if meeting["active"] == False:
-			meetings.remove(meeting)
-	Holder.meetings = meetings
+		if meeting["active"] != False:
+			temporary_meetings.append(meeting)
+	Holder.meetings = temporary_meetings
 	dict_to_json()
 	return "History Cleared"
+
 
 
 def join_meeting(meeting_link):
 	webbrowser.open(meeting_link)
 	return "Joining ..."
 
+
+
 def go_to_website():
 	webbrowser.open("https://ahammadshawki8.github.io/")
 	return "Redirecting to Creators Website ..."
+
+
 
 def go_to_readme():
 	webbrowser.open("https://github.com/ahammadshawki8/One-Meeting-Assistant/blob/main/README.md")

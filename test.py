@@ -1,5 +1,5 @@
 import mm_backend as mm
 
-
-print(mm.show_all_meetings({"organizer": "all", "subject":"all", "weekday":"all", "date": "all"}))
-
+if __name__ == "__main__":
+    pass
+    # all testing goes here
