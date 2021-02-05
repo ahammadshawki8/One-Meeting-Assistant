@@ -73,8 +73,3 @@ Details can be found in [LICENSE](LICENSE)
 <br><br>
 ![pic3](readme_pictures/pic3.png)
 <br><br>
-![pic6](readme_pictures/pic6.png)
-<br><br>
-![pic4](readme_pictures/pic4.png)
-<br><br>
-![pic5](readme_pictures/pic5.png)
